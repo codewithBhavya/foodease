@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Log in{% endblock %}
+{% block page %}login{% endblock %}
+{% block content %}
+<section class="auth">
+  <h1>Log in</h1>
+  <form id="auth-form" novalidate>
+    <label>Email<input name="email" type="email" autocomplete="email" required></label>
+    <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+    <p class="form-error" id="form-error" role="alert"></p>
+    <button class="btn btn-solid btn-wide" type="submit">Log in</button>
+  </form>
+  <p class="muted">New here? <a href="/register">Create an account</a></p>
+</section>
+{% endblock %}

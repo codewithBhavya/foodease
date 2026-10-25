@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Menu{% endblock %} · FoodEase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-page="{% block page %}{% endblock %}" data-role="{{ user.role if user else '' }}">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/">FoodEase</a>
+      <nav class="nav" aria-label="Main">
+        <a href="/" data-nav="menu">Menu</a>
+        {% if user %}<a href="/orders" data-nav="orders">My orders</a>{% endif %}
+        {% if user and user.role == 'admin' %}<a href="/admin" data-nav="admin">Admin</a>{% endif %}
+      </nav>
+      <div class="topbar-end">
+        <a class="cart-link" href="/cart" aria-label="Cart">Cart <span class="cart-count" id="cart-count">0</span></a>
+        {% if user %}
+          <span class="who">{{ user.name }}</span>
+          <button class="btn btn-quiet" id="logout" type="button">Log out</button>
+        {% else %}
+          <a class="btn btn-quiet" href="/login">Log in</a>
+          <a class="btn btn-solid" href="/register">Create account</a>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+
+  <a id="cartbar" class="cartbar" href="/cart" hidden></a>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

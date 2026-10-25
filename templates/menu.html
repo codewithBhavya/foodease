@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Menu{% endblock %}
+{% block page %}menu{% endblock %}
+{% block content %}
+<section class="menu-head">
+  <h1>Today's menu</h1>
+  <label class="search">
+    <span class="sr">Search the menu</span>
+    <input id="search" type="search" placeholder="Search dishes" autocomplete="off">
+  </label>
+</section>
+
+<div class="menu-layout">
+  <nav class="rail" id="rail" aria-label="Categories"></nav>
+  <div id="menu" class="menu" aria-live="polite"><p class="muted">Loading the menu…</p></div>
+</div>
+{% endblock %}
