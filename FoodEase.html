@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FoodEase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1b2437;--paper:#f3f5f2;--surface:#fff;--sf:#f0a81c;--sfs:#fdf0d2;--line:#d6ddd8;--mut:#566074;--red:#b8321a;--green:#23704a;--bar:#1b2437;--bar-text:#fff;--on-sf:#1b2437;
+--display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;--body:"DM Sans","Segoe UI",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8ecf4;--paper:#131a29;--surface:#1b2438;--sfs:#3a2f12;--line:#2e3a54;--mut:#9aa6bf;--red:#ff8f7a;--green:#6fd19b;--bar:#0d1320;color-scheme:dark}}
+:root[data-theme="dark"]{--ink:#e8ecf4;--paper:#131a29;--surface:#1b2438;--sfs:#3a2f12;--line:#2e3a54;--mut:#9aa6bf;--red:#ff8f7a;--green:#6fd19b;--bar:#0d1320;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bar);z-index:30}
+h1,h2,h3{font-family:var(--display);line-height:1.1;margin:0 0 .5em;letter-spacing:-.015em}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);font-weight:700}h2{font-size:1.4rem;font-weight:700}
+a{color:inherit}p{margin:0 0 1em}.mut{color:var(--mut)}
+:focus-visible{outline:3px solid var(--sf);outline-offset:2px}
+header{background:var(--bar);color:var(--bar-text);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.hd{max-width:980px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{font:700 1.4rem var(--display);text-decoration:none;color:#fff}
+.brand::after{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--sf);margin-left:4px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+nav a{text-decoration:none;padding:6px 12px;border-radius:6px;color:#cdd3e0;font-weight:500}
+nav a:hover{color:#fff;background:rgba(255,255,255,.08)}
+nav a[aria-current="page"]{color:#fff;background:rgba(255,255,255,.16)}
+.pill{background:var(--sf);color:var(--on-sf);border-radius:999px;padding:0 7px;font-size:.78rem;font-weight:700;margin-left:6px}
+main{max-width:980px;margin:0 auto;padding:30px 20px 90px}
+.btn{font:600 .95rem var(--body);border-radius:8px;padding:10px 18px;border:1.5px solid transparent;cursor:pointer;text-decoration:none;display:inline-block;background:var(--sf);color:var(--on-sf)}
+.btn:hover{filter:brightness(1.06)}.btn.q{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.d{background:transparent;color:var(--red);border-color:var(--red)}.btn.s{padding:6px 12px;font-size:.86rem}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;padding:14px 0 36px}
+.board{background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:20px 22px}
+.board h2{border-bottom:2px solid var(--ink);padding-bottom:8px}
+.row{display:flex;align-items:baseline;gap:8px;padding:9px 0}
+.row .l{flex:1;border-bottom:2px dotted var(--line);transform:translateY(-4px);min-width:16px}
+.row b{font-variant-numeric:tabular-nums}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:10px;padding:0;list-style:none;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--ink);padding-top:12px}
+.steps li::before{content:counter(s);font:700 1.6rem var(--display);color:var(--sf);display:block}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+.tabs button{font:600 .92rem var(--body);background:transparent;color:var(--mut);border:1.5px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.dish{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.dish .n{font-weight:600}.act{min-width:110px;display:flex;justify-content:flex-end}
+.st{display:inline-flex;align-items:center;border:1.5px solid var(--ink);border-radius:8px;overflow:hidden}
+.st button{width:34px;height:34px;border:0;background:var(--ink);color:var(--paper);font:600 1.1rem var(--body);cursor:pointer}
+.st output{min-width:34px;text-align:center;font-weight:700}
+.cart{display:grid;grid-template-columns:1fr 320px;gap:34px;align-items:start}
+.box{background:var(--surface);border:2px solid var(--ink);border-radius:12px;padding:20px}
+.ln{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.sum{display:flex;justify-content:space-between;font:700 1.2rem var(--display);margin:6px 0 16px}
+.pay{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:8px;padding:9px 12px;margin-bottom:8px;cursor:pointer}
+.pay:has(input:checked){border-color:var(--ink);background:var(--sfs)}
+.ord{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;margin-bottom:12px}
+.trk{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);margin:0 0 14px;padding:0}
+.trk li{position:relative;padding-top:24px;font-size:.86rem;color:var(--mut)}
+.trk li::before{content:"";position:absolute;top:4px;left:0;width:14px;height:14px;border-radius:50%;background:var(--surface);border:2px solid var(--line);z-index:1}
+.trk li::after{content:"";position:absolute;top:10px;left:14px;right:0;height:2px;background:var(--line)}
+.trk li:last-child::after{display:none}
+.trk li.done{color:var(--ink)}.trk li.done::before,.trk li.done::after{background:var(--green);border-color:var(--green)}
+.trk li.cur{color:var(--ink);font-weight:700}.trk li.cur::before{background:var(--sf);border-color:var(--ink)}
+.ft{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.badge{font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--sfs);color:var(--ink)}
+.ok{background:var(--surface);border-left:5px solid var(--green);padding:18px 20px;border-radius:6px}
+.empty{padding:30px 0}
+@media(max-width:780px){.hero,.cart{grid-template-columns:1fr}.steps{grid-template-columns:1fr}nav{width:100%;margin-left:0}}
+@media(max-width:480px){.trk{grid-template-columns:repeat(2,1fr);row-gap:8px}.ln{grid-template-columns:1fr auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="hd">
+  <a class="brand" href="#home">FoodEase</a>
+  <nav aria-label="Main">
+    <a href="#home" data-r="home">Home</a><a href="#menu" data-r="menu">Menu</a>
+    <a href="#cart" data-r="cart">Cart<span class="pill" id="cc">0</span></a><a href="#orders" data-r="orders">My orders</a>
+  </nav>
+</div></header>
+<main id="app"></main>
+<script>
+"use strict";
+const MENU=[
+[1,"Pizza","Margherita Pizza",199],[2,"Pizza","Farmhouse Pizza",279],[3,"Pizza","Paneer Tikka Pizza",299],
+[4,"Burger","Veg Burger",99],[5,"Burger","Cheese Burger",129],[6,"Burger","Crispy Paneer Burger",149],
+[7,"Drinks","Cold Coffee",79],[8,"Drinks","Masala Chaas",39],[9,"Drinks","Fresh Lime Soda",59],
+[10,"Sides","French Fries",89],[11,"Sides","Garlic Bread",109],[12,"Sides","Chocolate Brownie",119]
+].map(([id,cat,name,price])=>({id,cat,name,price}));
+const STEPS=["Placed","Preparing","Out for Delivery","Delivered"];
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN");
+const store={
+  get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}
+};
+let cart=store.get("fe_cart",{}), orders=store.get("fe_orders",[]), cat="All", method="UPI", placed=null;
+const save=()=>{store.set("fe_cart",cart);store.set("fe_orders",orders);count()};
+const count=()=>{$("#cc").textContent=Object.values(cart).reduce((a,b)=>a+b,0)};
+const total=()=>Object.entries(cart).reduce((a,[id,q])=>a+MENU.find(m=>m.id==id).price*q,0);
+const time=t=>new Date(t).toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit"});
+const stepper=q=>`<div class="st"><button data-a="dec" aria-label="Remove one">−</button><output>${q}</output><button data-a="inc" aria-label="Add one">+</button></div>`;
+
+const views={
+home(){return `<section class="hero"><div>
+  <h1>Hot food, ordered in a minute.</h1>
+  <p class="mut" style="font-size:1.1rem;max-width:34ch">Pick your dishes, pay your way and watch your order move from kitchen to door.</p>
+  <a class="btn" href="#menu">Order now</a></div>
+  <div class="board"><h2>Popular today</h2>${[1,4,7,11].map(i=>{const m=MENU.find(x=>x.id==i);return `<div class="row"><span>${esc(m.name)}</span><span class="l"></span><b>${inr(m.price)}</b></div>`}).join("")}</div></section>
+  <h2>How it works</h2>
+  <ol class="steps"><li><b>Choose</b><p class="mut">Browse the menu and add what you like.</p></li>
+  <li><b>Pay</b><p class="mut">Check your cart and pick UPI, card or cash.</p></li>
+  <li><b>Track</b><p class="mut">Follow each step of your order live.</p></li></ol>`},
+menu(){const cats=["All",...new Set(MENU.map(m=>m.cat))];
+  const list=MENU.filter(m=>cat=="All"||m.cat==cat);
+  return `<h1>Menu</h1><div class="tabs">${cats.map(c=>`<button data-cat="${c}" aria-pressed="${c==cat}">${c}</button>`).join("")}</div>
+  ${list.map(m=>`<div class="dish" data-id="${m.id}"><div class="row" style="padding:0"><span class="n">${esc(m.name)}</span><span class="l"></span><b>${inr(m.price)}</b></div>
+  <div class="act">${cart[m.id]?stepper(cart[m.id]):`<button class="btn s" data-a="inc">Add</button>`}</div></div>`).join("")}`},
+cart(){if(placed){const o=placed;return `<div class="ok"><h2>Order #${o.id} placed</h2><p>Your total is ${inr(o.total)}. Paid by ${o.method}.</p><a class="btn" href="#orders">Track your order</a></div>`}
+  const ids=Object.keys(cart);
+  if(!ids.length)return `<h1>Your cart</h1><div class="empty"><p>Your cart is empty.</p><a class="btn" href="#menu">Browse the menu</a></div>`;
+  return `<h1>Your cart</h1><div class="cart"><div>${ids.map(id=>{const m=MENU.find(x=>x.id==id);return `<div class="ln" data-id="${id}"><div><b>${esc(m.name)}</b><div class="mut">${inr(m.price)} each</div></div>${stepper(cart[id])}<b>${inr(m.price*cart[id])}</b></div>`}).join("")}</div>
+  <aside class="box"><h2>Checkout</h2><div class="sum"><span>Total</span><span>${inr(total())}</span></div>
+  ${["UPI","Card","Cash"].map(p=>`<label class="pay"><input type="radio" name="pm" value="${p}" ${p==method?"checked":""}> ${p=="Cash"?"Cash on delivery":p}</label>`).join("")}
+  <button class="btn" style="width:100%;margin-top:8px" data-a="place">Place order</button>
+  <p class="mut" style="font-size:.85rem;margin:12px 0 0">Demo site: no real payment is taken.</p></aside></div>`},
+orders(){if(!orders.length)return `<h1>My orders</h1><div class="empty"><p>You haven’t ordered anything yet.</p><a class="btn" href="#menu">Browse the menu</a></div>`;
+  return `<h1>My orders</h1>`+orders.map(o=>{const i=STEPS.indexOf(o.status);
+  return `<article class="ord" data-oid="${o.id}"><div class="top"><h2 style="margin:0">Order #${o.id}</h2><span class="mut">${new Date(o.date).toLocaleDateString("en-IN",{day:"numeric",month:"short"})}, ${time(o.date)}</span></div>
+  ${o.status=="Cancelled"?`<p class="mut">This order was cancelled.</p>`:`<ol class="trk">${STEPS.map((s,k)=>`<li class="${k<i?"done":k==i?"cur":""}">${s}</li>`).join("")}</ol>`}
+  ${o.items.map(l=>`<div class="row"><span>${l.q} × ${esc(l.name)}</span><span class="l"></span><b>${inr(l.q*l.price)}</b></div>`).join("")}
+  <div class="ft"><span><span class="badge">${o.status}</span> <span class="badge">${o.method}</span></span><span><b>${inr(o.total)}</b>
+  ${o.status=="Placed"?` <button class="btn d s" data-a="cancel">Cancel</button>`:""}
+  ${!["Delivered","Cancelled"].includes(o.status)?` <button class="btn q s" data-a="next">Next step (demo)</button>`:""}</span></div></article>`}).join("")}
+};
+
+function route(){const r=(location.hash.slice(1)||"home");const v=views[r]?r:"home";
+  if(v!="cart")placed=null;
+  document.querySelectorAll("nav a").forEach(a=>{if(a.dataset.r==v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  $("#app").innerHTML=views[v]();document.title=v[0].toUpperCase()+v.slice(1)+" · FoodEase";window.scrollTo(0,0)}
+function redraw(){const y=scrollY;const r=(location.hash.slice(1)||"home");$("#app").innerHTML=views[views[r]?r:"home"]();scrollTo(0,y)}
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-a]"),t=e.target.closest("[data-cat]");
+  if(t){cat=t.dataset.cat;redraw();return}
+  if(!b)return;
+  const a=b.dataset.a,row=b.closest("[data-id]"),id=row&&row.dataset.id;
+  if(a=="inc"||a=="dec"){const q=(cart[id]||0)+(a=="inc"?1:-1);if(q>20)return;if(q<=0)delete cart[id];else cart[id]=q;save();redraw()}
+  else if(a=="place"){const items=Object.entries(cart).map(([i,q])=>{const m=MENU.find(x=>x.id==i);return{name:m.name,price:m.price,q}});
+    const o={id:(orders[0]?orders[0].id:1000)+1,date:Date.now(),status:"Placed",method,total:total(),items};
+    orders.unshift(o);placed=o;cart={};save();redraw()}
+  else{const o=orders.find(x=>x.id==b.closest("[data-oid]").dataset.oid);
+    if(a=="cancel"&&o.status=="Placed")o.status="Cancelled";
+    if(a=="next"){const i=STEPS.indexOf(o.status);if(i>=0&&i<3)o.status=STEPS[i+1]}
+    save();redraw()}
+});
+document.addEventListener("change",e=>{if(e.target.name=="pm")method=e.target.value});
+addEventListener("hashchange",route);count();route();
+</script>
+</body>
+</html>
